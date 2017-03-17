@@ -1,0 +1,18 @@
+<section class="form">
+  <form #f="ngForm" (ngSubmit)="addEvent()">
+    <input class="event-title"
+           placeholder="Event title"
+           required
+           autofocus=""
+           name="title"
+           [(ngModel)]="newEvent.title"
+    >
+    <input class="event-date"
+           type="date"
+           required
+           name="date"
+           [(ngModel)]="newEvent.date"
+    >
+    <button type="submit" [disabled]="!f.valid" class="button">Add Event</button>
+  </form>
+</section>

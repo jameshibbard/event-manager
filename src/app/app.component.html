@@ -3,41 +3,10 @@
     <h1>Event Manager</h1>
   </header>
 
-  <section class="form">
-    <form #f="ngForm" (ngSubmit)="addEvent()">
-      <input class="event-title"
-             placeholder="Event title"
-             required
-             autofocus=""
-             name="title"
-             [(ngModel)]="newEvent.title"
-      >
-      <input class="event-date"
-             type="date"
-             required
-             name="date"
-             [(ngModel)]="newEvent.date"
-      >
-      <button type="submit" [disabled]="!f.valid" class="button">Add Event</button>
-    </form>
-  </section>
+  <app-event-form (add)="onAddEvent($event)"></app-event-form>
 
-  <section class="main" *ngIf="events.length > 0">
-    <h2>Events</h2>
-    <ul class="event-list">
-      <li *ngFor="let event of events" [class.completed]="event.complete">
-        <div class="view">
-          <strong>{{event.date}}</strong>: {{event.title}}
-          <a href="#" (click)="removeEvent($event, event)">Remove</a>
-        </div>
-      </li>
-    </ul>
-  </section>
+  <app-event-list [events]="events" (remove)="onRemoveEvent($event)">
+  </app-event-list>
 
-  <footer class="footer" *ngIf="events.length > 0">
-    <span class="todo-count">
-      <strong>Total</strong>:
-      {{events.length}} {{events.length === 1 ? 'event' : 'events'}}
-    </span>
-  </footer>
+  <app-event-list-footer [events]="events"></app-event-list-footer>
 </section>

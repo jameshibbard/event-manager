@@ -6,26 +6,19 @@ import {EventDataService} from './event-data.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [EventDataService]
+  providers: []
 })
 export class AppComponent {
-
-  newEvent: Event = new Event();
 
   constructor(private eventDataService: EventDataService) {
   }
 
-  addEvent() {
-    this.eventDataService.addEvent(this.newEvent);
-    this.newEvent = new Event();
+  onAddEvent(event: Event) {
+    this.eventDataService.addEvent(event);
   }
 
-  removeEvent(e, event) {
-    e.preventDefault();
-
-    if(confirm("Are you sure?")){
-      this.eventDataService.deleteEventById(event.id);
-    }
+  onRemoveEvent(event: Event) {
+    this.eventDataService.deleteEventById(event.id);
   }
 
   get events() {

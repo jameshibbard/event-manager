@@ -1,0 +1,6 @@
+<footer class="footer" *ngIf="events.length > 0">
+  <span class="event-count">
+    <strong>Total</strong>:
+    {{events.length}} {{events.length === 1 ? 'event' : 'events'}}
+  </span>
+</footer>

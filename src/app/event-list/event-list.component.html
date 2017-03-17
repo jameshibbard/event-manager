@@ -1,0 +1,9 @@
+<section class="main" *ngIf="events.length > 0">
+  <h2>Events</h2>
+  <ul class="event-list">
+    <li *ngFor="let event of events" [class.completed]="event.complete">
+      <app-event-list-item [event]="event" (remove)="onRemoveEvent($event)">
+      </app-event-list-item>
+    </li>
+  </ul>
+</section>
