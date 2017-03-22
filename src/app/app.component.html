@@ -1,12 +1,11 @@
-<section class="eventapp">
-  <header class="header">
-    <h1>Event Manager</h1>
-  </header>
+<header>
+  <article>
+    <div class="logo">
+      <h1>
+        <a href="/">Event Manager</a>
+      </h1>
+    </div>
+  </article>
+</header>
 
-  <app-event-form (add)="onAddEvent($event)"></app-event-form>
-
-  <app-event-list [events]="events" (remove)="onRemoveEvent($event)">
-  </app-event-list>
-
-  <app-event-list-footer [events]="events"></app-event-list-footer>
-</section>
+<router-outlet></router-outlet>

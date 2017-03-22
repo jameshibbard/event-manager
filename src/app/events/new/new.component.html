@@ -1,0 +1,33 @@
+<article id="lead">
+  <h2>New Event</h2>
+
+  <form #f="ngForm" (ngSubmit)="createNewEvent(f)">
+    <fieldset>
+      <dl>
+        <dt><label>Type:</label></dt>
+        <dd><input type="text" name="type" required [(ngModel)]="newEvent.type"></dd>
+      </dl>
+      <dl>
+        <dt><label>Date:</label></dt>
+        <dd><input type="date" name="date" required [(ngModel)]="newEvent.date"></dd>
+      </dl>
+      <dl class="textArea">
+        <dt><label>Title:</label></dt>
+        <dd><textarea name="title" required [(ngModel)]="newEvent.title"></textarea></dd>
+      </dl>
+      <dl>
+        <dt><label>Speaker:</label></dt>
+        <dd><input type="text" name="speaker" required [(ngModel)]="newEvent.speaker"></dd>
+      </dl>
+      <dl>
+        <dt><label>Host:</label></dt>
+        <dd><input type="text" name="host" required [(ngModel)]="newEvent.host"></dd>
+      </dl>
+      </fieldset>
+
+      <fieldset class="actions">
+        <input type="submit" value="Create Event">
+        <a routerLink="/events" class="cancel">Cancel</a>
+      </fieldset>
+    </form>
+  </article>

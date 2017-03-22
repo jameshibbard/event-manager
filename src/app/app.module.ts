@@ -1,27 +1,28 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import {FormsModule} from "@angular/forms";
 
 import { AppComponent } from './app.component';
-import { EventDataService } from './event-data.service';
-import { EventFormComponent } from './event-form/event-form.component';
-import { EventListComponent } from './event-list/event-list.component';
-import { EventListItemComponent } from './event-list-item/event-list-item.component';
-import { EventListFooterComponent } from './event-list-footer/event-list-footer.component';
+import { EventDataService } from './events/event-data.service';
+
+import { AppRoutingModule } from './app-routing.module';
+import { EventsComponent } from './events/events.component';
+import { DetailComponent } from './events/detail/detail.component';
+import { NewComponent } from './events/new/new.component';
+import { EditComponent } from './events/edit/edit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EventFormComponent,
-    EventListComponent,
-    EventListItemComponent,
-    EventListFooterComponent
+    EventsComponent,
+    DetailComponent,
+    NewComponent,
+    EditComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    AppRoutingModule
   ],
   providers: [EventDataService],
   bootstrap: [AppComponent]
