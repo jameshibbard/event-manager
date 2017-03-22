@@ -1,33 +1,35 @@
-<article id="lead">
+<article id="event">
   <h2>Editing Event</h2>
 
   <form #f="ngForm" (ngSubmit)="updateEvent(f)">
     <fieldset>
-      <dl>
-        <dt><label>Type:</label></dt>
-        <dd><input type="text" name="type" required [ngModel]="event.type"></dd>
-      </dl>
-      <dl>
-        <dt><label>Date:</label></dt>
-        <dd><input type="date" name="date" required [ngModel]="event.date"></dd>
-      </dl>
-      <dl class="textArea">
-        <dt><label>Title:</label></dt>
-        <dd><textarea name="title" required [ngModel]="event.title"></textarea></dd>
-      </dl>
-      <dl>
-        <dt><label>Speaker:</label></dt>
-        <dd><input type="text" name="speaker" required [ngModel]="event.speaker"></dd>
-      </dl>
-      <dl>
-        <dt><label>Host:</label></dt>
-        <dd><input type="text" name="host" required [ngModel]="event.host"></dd>
-      </dl>
-      </fieldset>
+      <div class="form-element">
+        <label for="type">Type:</label>
+        <input type="text" name="type" id="type" [(ngModel)]="event.type" />
+      </div>
+      <div class="form-element">
+        <label for="datepicker">Date:</label>
+          <input type="text" id="datepicker" name="date" #datePicker required
+                 (blur)="updateDate(datePicker.value)"
+                 [ngModel]="event.date | date:'d MMMM yyyy'">
+      </div>
+      <div class="form-element">
+        <label for="title">Title:</label>
+        <textarea name="title"  id="title" [(ngModel)]="event.title"></textarea>
+      </div>
+      <div class="form-element">
+        <label for="speaker">Speaker:</label>
+        <input type="text" name="speaker" id="speaker" [(ngModel)]="event.speaker">
+      </div>
+      <div class="form-element">
+        <label for="host">Host:</label>
+        <input type="text" name="host" id="host" [(ngModel)]="event.host">
+      </div>
+    </fieldset>
 
-      <fieldset class="actions">
-        <input type="submit" value="Update Event">
-        <a routerLink="/events" class="cancel">Cancel</a>
-      </fieldset>
-    </form>
-  </article>
+    <fieldset class="actions">
+      <input type="submit" value="Update Event">
+      <a routerLink="/events" class="cancel">Cancel</a>
+    </fieldset>
+  </form>
+</article>

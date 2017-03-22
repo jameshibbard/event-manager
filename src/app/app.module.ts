@@ -22,7 +22,7 @@ import { EditComponent } from './events/edit/edit.component';
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [EventDataService],
   bootstrap: [AppComponent]
