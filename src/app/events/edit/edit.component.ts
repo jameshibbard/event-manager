@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { ChangeDetectorRef } from '@angular/core';
 
 import { EventDataService } from '../event-data.service';
 import { Event } from '../event';
@@ -21,8 +20,7 @@ export class EditComponent implements OnInit {
   constructor(
     private eventDataService: EventDataService,
     private route: ActivatedRoute,
-    private router: Router,
-    private ref: ChangeDetectorRef
+    private router: Router
   ) { }
 
   ngOnInit(): void {
