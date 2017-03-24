@@ -31,6 +31,7 @@ export class EditComponent implements OnInit {
       field: document.getElementById('datepicker'),
       format: 'D MMMM YYYY'
     });
+    picker.setDate(this.event.date);
   }
 
   // Horrible, horrible ...
