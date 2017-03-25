@@ -10,17 +10,26 @@ import { EventDataService } from './event-data.service';
   styleUrls: ['./events.component.css'],
   providers: [EventDataService]
 })
-export class EventsComponent {
+export class EventsComponent implements OnInit {
+
+  events: Event[];
 
   constructor(
     private eventDataService: EventDataService,
     private router: Router) { }
 
+  ngOnInit(): void {
+    this.getEvents();
+  }
+
   showEvent(id:number){
     this.router.navigate(['/events', id]);
   }
 
-  get events() {
-    return this.eventDataService.getAllEvents();
+  getEvents(): void {
+    this.eventDataService.getAllEvents().then(events => {
+      console.log(events)
+      this.events = events
+    });
   }
 }

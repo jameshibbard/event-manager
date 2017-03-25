@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Headers, Http } from '@angular/http';
+
+import 'rxjs/add/operator/toPromise';
 
 import { Event } from './event';
 import { EVENTS } from './mock-events';
@@ -8,8 +11,16 @@ export class EventDataService {
   events: Event[] = EVENTS;
   lastId: number = EVENTS.length;
 
-  getAllEvents(): Event[] {
-    return this.events;
+  private eventsUrl = 'http://localhost:8000/api/events/';  // URL to web api
+
+  constructor(private http: Http) {}
+
+  getAllEvents(): Promise<Event[]> {
+    return this.http.get(this.eventsUrl)
+               .toPromise()
+               .then(response => response.json())
+               .then(data => data.map(this.toEvent))
+               .catch(this.handleError);
   }
 
   // GET /events/:id
@@ -44,5 +55,21 @@ export class EventDataService {
       .filter(event => event.id !== id);
 
     return this;
+  }
+
+  private handleError(error: any): Promise<any> {
+    console.error('An error occurred', error);
+    return Promise.reject(error.message || error);
+  }
+
+  private toEvent(obj) {
+    return new Event({
+      id: obj._id,
+      type: obj.type,
+      date: new Date(obj.date),
+      title: obj.title,
+      speaker: obj.speaker,
+      host: obj.host,
+    });
   }
 }
