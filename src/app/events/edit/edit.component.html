@@ -10,7 +10,7 @@
       <div class="form-element">
         <label for="datepicker">Date:</label>
           <input type="text" id="datepicker" name="date" #datePicker required
-                 (blur)="updateDate(datePicker.value)"
+                 (blur)="f.value.date = datePicker.value"
                  [ngModel]="event.date | date:'d MMMM yyyy'">
       </div>
       <div class="form-element">

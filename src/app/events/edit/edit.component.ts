@@ -15,7 +15,6 @@ import * as Pikaday from 'pikaday';
 export class EditComponent implements OnInit {
 
   event: Event;
-  newDate: Date;
 
   constructor(
     private eventDataService: EventDataService,
@@ -34,16 +33,7 @@ export class EditComponent implements OnInit {
     picker.setDate(this.event.date);
   }
 
-  // Horrible, horrible ...
-  // http://stackoverflow.com/a/37634150/1136887
-  // Binding directly to ngModel caused list of events to be dynamically updated
-  updateDate(dateString: string){
-    this.newDate = new Date(dateString);
-  }
-
   updateEvent(form: NgForm){
-    if (this.newDate) form.value.date = this.newDate
-
     this.eventDataService.updateEventById(this.event.id, form.value)
     this.router.navigate(['/events']);
   }
