@@ -4,14 +4,12 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Event } from './event';
-import { EVENTS } from './mock-events';
 
 @Injectable()
 export class EventDataService {
-  events: Event[] = EVENTS;
-  lastId: number = EVENTS.length;
+  events: Event[];
 
-  private eventsUrl = 'http://localhost:8000/api/events/';  // URL to web api
+  private eventsUrl = 'http://localhost:8000/api/events';  // URL to web api
 
   constructor(private http: Http) {}
 
@@ -20,41 +18,57 @@ export class EventDataService {
                .toPromise()
                .then(response => response.json())
                .then(data => data.map(this.toEvent))
+               .then(events => this.events = events)
                .catch(this.handleError);
   }
 
-  // GET /events/:id
-  getEventById(id: number): Event {
-    return this.events
-      .filter(event => event.id === id)
-      .pop();
+  getEventById(id: number): Promise<Event> {
+    return this.http.get(`${this.eventsUrl}/${id}`)
+               .toPromise()
+               .then(response => response.json())
+               .then(this.toEvent)
+               .catch(this.handleError);
   }
 
-  // Simulate POST /events
-  addEvent(event: Event): EventDataService {
-    if (!event.id) {
-      event.id = ++this.lastId;
+  addEvent(event: Event): Promise<Event> {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.post(this.eventsUrl, JSON.stringify(event), { headers })
+               .toPromise()
+               .then(response => response.json())
+               .then(this.toEvent)
+               .then(event => this.events.push(event))
+               .catch(this.handleError);
+  }
+
+  updateEventById(id: number, values: Object = {}): Promise<void> {
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      
+      const event: Event = this.events.filter(ev => ev.id === id).pop();
+
+      return this.http.put(`${this.eventsUrl}/${id}`, JSON.stringify(values), { headers })
+                .toPromise()
+                .then(() => {
+                  const updatedEvent = this.toEvent(values);
+                  updatedEvent.id = id;
+
+                  const index = this.events.indexOf(event);
+                  this.events.splice(index, 1, updatedEvent);
+                })
+                .catch(this.handleError);
     }
-    this.events.push(event);
-    return this;
-  }
 
-  // Simulate PUT /events/:id
-  updateEventById(id: number, values: Object = {}): Event {
-    let event = this.getEventById(id);
-    if (!event) {
-      return null;
-    }
-    Object.assign(event, values);
-    return event;
-  }
-
-  // DELETE /events/:id
-  deleteEventById(id: number): EventDataService {
-    this.events = this.events
-      .filter(event => event.id !== id);
-
-    return this;
+  deleteEventById(id: number): Promise<void> {
+    const event: Event = this.events.filter(ev => ev.id === id).pop();
+    return this.http.delete(`${this.eventsUrl}/${id}`)
+               .toPromise()
+               .then(() => {
+                 const index = this.events.indexOf(event);
+                 this.events.splice(index, 1);
+               })
+               .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {
@@ -62,7 +76,7 @@ export class EventDataService {
     return Promise.reject(error.message || error);
   }
 
-  private toEvent(obj) {
+  private toEvent(obj): Event {
     return new Event({
       id: obj._id,
       type: obj.type,

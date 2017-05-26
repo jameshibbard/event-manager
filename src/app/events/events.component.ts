@@ -27,9 +27,6 @@ export class EventsComponent implements OnInit {
   }
 
   getEvents(): void {
-    this.eventDataService.getAllEvents().then(events => {
-      console.log(events)
-      this.events = events
-    });
+    this.eventDataService.getAllEvents().then(events => this.events = events);
   }
 }

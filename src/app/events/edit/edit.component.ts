@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
@@ -12,9 +12,11 @@ import * as Pikaday from 'pikaday';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css']
 })
-export class EditComponent implements OnInit {
+export class EditComponent implements OnInit, OnDestroy {
 
   event: Event;
+
+  private sub: any;
 
   constructor(
     private eventDataService: EventDataService,
@@ -23,14 +25,25 @@ export class EditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(
-      params => this.event = this.eventDataService.getEventById(+params['id'])
-    );
+    this.event = new Event();
+
     const picker = new Pikaday({
       field: document.getElementById('datepicker'),
       format: 'D MMMM YYYY'
     });
-    picker.setDate(this.event.date);
+
+    this.sub = this.route.params.subscribe(
+      params => {
+        this.eventDataService.getEventById(params['id']).then((event: Event) => {
+          this.event = event;
+          picker.setDate(event.date);
+        });
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   updateEvent(form: NgForm){
