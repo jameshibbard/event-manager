@@ -1,0 +1,37 @@
+<article id="event">
+  <h2>New Event</h2>
+
+  <div *ngIf="formInvalid" class="error">All fields are mandatory.</div>
+
+  <form #f="ngForm" (ngSubmit)="createNewEvent(f)">
+    <fieldset>
+      <div class="form-element">
+        <label for="type">Type:</label>
+        <input type="text" name="type" id="type" [(ngModel)]="newEvent.type" />
+      </div>
+      <div class="form-element">
+        <label for="datepicker">Date:</label>
+          <input type="text" id="datepicker" name="date" #datePicker
+                 (blur)="newEvent.date = datePicker.value"
+                 [ngModel]="newEvent.date">
+      </div>
+      <div class="form-element">
+        <label for="title">Title:</label>
+        <textarea name="title" id="title" [(ngModel)]="newEvent.title"></textarea>
+      </div>
+      <div class="form-element">
+        <label for="speaker">Speaker:</label>
+        <input type="text" name="speaker" id="speaker" [(ngModel)]="newEvent.speaker">
+      </div>
+      <div class="form-element">
+        <label for="host">Host:</label>
+        <input type="text" name="host" id="host" [(ngModel)]="newEvent.host">
+      </div>
+    </fieldset>
+
+    <fieldset class="actions">
+      <input type="submit" value="Create Event">
+      <a routerLink="/events" class="cancel">Cancel</a>
+    </fieldset>
+  </form>
+</article>

@@ -1,0 +1,12 @@
+<article id="event" *ngIf="event">
+  <h2>{{event.date | date:'dd/MM/yyyy'}} - {{event.type}}</h2>
+
+  <p><strong>Type:</strong> {{event.type}}</p>
+  <p><strong>Date:</strong> {{event.date | date:'d MMMM yyyy'}}</p>
+  <p><strong>Title:</strong> {{event.title}}</p>
+  <p><strong>Speaker(s):</strong> {{event.speaker}}</p>
+  <p><strong>Host(s):</strong> {{event.host}}</p>
+
+  <a routerLink="edit">Edit</a>&nbsp;&nbsp;|&nbsp;
+  <a href="#" (click)="delete($event, event)">Delete</a>
+</article>

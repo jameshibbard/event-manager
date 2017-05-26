@@ -1,0 +1,12 @@
+<section id="main">
+  <article id="events">
+    <h1>Events<a routerLink="new">New Event</a></h1>
+    <ul>
+      <li *ngFor="let event of events" (click)="showEvent(event.id)">
+        <span>{{event.date | date:'dd/MM/yyyy' }}</span> - {{event.type}}
+      </li>
+    </ul>
+  </article>
+</section>
+
+<router-outlet></router-outlet>
