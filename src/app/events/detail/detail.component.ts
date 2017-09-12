@@ -20,13 +20,15 @@ export class DetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(
-      params => this.event = this.eventDataService.getEventById(+params['id'])
+      params => this.eventDataService.getEventById(params['id']).then(event => {
+        this.event = event;
+      })
     );
   }
 
   delete(e:MouseEvent, event:Event): void{
     e.preventDefault();
-    if(confirm("Are you sure?")){
+    if (confirm("Are you sure?")) {
       this.eventDataService.deleteEventById(event.id);
       this.router.navigate(['/events']);
     }
